@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Tasks from "./pages/Tasks";
@@ -18,10 +19,13 @@ function Layout() {
 
   return (
     <>
-      {location.pathname !== "/" && <Navbar />}
+      {location.pathname !== "/" &&
+       location.pathname !== "/register" && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
 
         <Route
           path="/dashboard"
