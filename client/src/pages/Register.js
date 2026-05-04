@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import API from "../api";
 
 function Register() {
@@ -8,30 +9,28 @@ function Register() {
 
   const handleRegister = async () => {
     try {
-      await API.post("/api/auth/register", {
+      const res = await API.post("/auth/register", {
         name,
         email,
         password
       });
 
-      alert("Registration successful! Please login now.");
-      window.location.href = "/";
-    } catch (err) {
-      console.log(err);
-      alert("Registration failed");
+      localStorage.setItem("token", res.data.token);
+
+      alert("Registration Successful");
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.log(error);
+      alert("Registration Failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">
-          Team Task Manager
+          Sign Up
         </h1>
-
-        <h2 className="text-xl font-semibold mb-4 text-center">
-          Register
-        </h2>
 
         <input
           type="text"
@@ -59,10 +58,20 @@ function Register() {
 
         <button
           onClick={handleRegister}
-          className="w-full bg-green-600 text-white py-3 rounded"
+          className="w-full bg-green-600 text-white py-3 rounded-lg"
         >
           Register
         </button>
+
+        <p className="text-center mt-4">
+          Already have an account?{" "}
+          <Link
+            to="/"
+            className="text-blue-600 font-semibold"
+          >
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
